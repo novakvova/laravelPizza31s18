@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    //dump([1,2,3]);
-    //exit();
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    //dump([1,2,3]);
+//    //exit();
+//    return view('welcome');
+//});
+//
+//Route::get('/category', "CategoryController@index");
 
-Route::get('/category', "CategoryController@index");
+Route::view('/{path?}', 'app');
