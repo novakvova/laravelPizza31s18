@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import TextFieldGroup from '../../common/TextFieldGroup';
+import axios from 'axios'
+
 export class LoginPage extends Component {
     state = {
         email: '',
@@ -35,6 +37,16 @@ export class LoginPage extends Component {
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {
             console.log('Model is Valid')
+            axios.post('/api/login', {
+                email: email,
+                password: password
+            }).then(
+                (resp)=> { console.log('----responce------', resp); },
+                (err) => { console.log('----error------', err)}
+            ).catch((err)=> {
+                (err) => { console.log('----error SERVER------', err)}
+            });
+            //axios
             //ajax axios post
         }
         else {

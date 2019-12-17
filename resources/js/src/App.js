@@ -1,11 +1,15 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Header from './components/Header';
-import HomePage from './components/Home';
-import RegisterPage from './components/auth/Register';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { Component, Suspense } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Header from "./components/Header";
+const Home = React.lazy(() => import("./components/Home"));
+const Register = React.lazy(() => import("./components/auth/Register"));
+const Login = React.lazy(() => import("./components/auth/Login"));
 
+const loading = () => (
+    <div className="animated fadeIn pt-3 text-center">Loading...</div>
+);
 
 class App extends Component {
     render() {
@@ -15,17 +19,21 @@ class App extends Component {
                     <Header />
                 </div>
                 <div className="container">
-                <Route exact path="/">
-                    <HomePage />
-                 </Route>
-
-                 <Route exact path="/register">
-                    <RegisterPage />
-                 </Route>
+                    <Suspense fallback={<div>Загрузка...</div>}>
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route
+                                exact
+                                path="/register"
+                                component={Register}
+                            />
+                            <Route exact path="/login" component={Login} />
+                        </Switch>
+                    </Suspense>
                 </div>
             </BrowserRouter>
-        )
+        );
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById("app"));
